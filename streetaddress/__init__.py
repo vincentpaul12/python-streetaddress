@@ -1,4 +1,5 @@
-from addressconf import Directions, Streets, States, Regexes
+from __future__ import absolute_import
+from .addressconf import Directions, Streets, States, Regexes
 import re
 
 def parse(location):
@@ -56,7 +57,7 @@ def normalize_address(addr):
 
     addr['unit_prefix'] = _upper_if_exists(addr.get('unit_prefix', None))
 
-    addr = dict((k,v) for k,v in addr.items() if v)
+    addr = dict((k,v) for k,v in list(addr.items()) if v)
 
     return addr 
 

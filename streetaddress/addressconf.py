@@ -1,3 +1,4 @@
+from builtins import object
 import re
 class Directions(object):
 	DIRECTIONAL = {
@@ -9,7 +10,7 @@ class Directions(object):
 		"southwest":"SW",
 		"west":"W",
 		"northwest":"NW"}
-	DIRECTIONAL_CODES = dict((v,k) for k,v in DIRECTIONAL.iteritems())
+	DIRECTIONAL_CODES = dict((v,k) for k,v in list(DIRECTIONAL.items()))
 
 class Streets(object):
 	STREET_TYPES = {
@@ -377,7 +378,7 @@ class Streets(object):
 		"wy":"way"
 		}
 	
-	STREET_TYPES_LIST = set(STREET_TYPES.keys() + STREET_TYPES.values())
+	STREET_TYPES_LIST = set(list(STREET_TYPES.keys()) + list(STREET_TYPES.values()))
 	
 class States(object):
 	STATE_CODES = {
@@ -442,7 +443,7 @@ class States(object):
 		"wyoming":"WY"
 		}
 	
-	STATE_NAMES = dict((v,k) for k,v in STATE_CODES.iteritems())
+	STATE_NAMES = dict((v,k) for k,v in list(STATE_CODES.items()))
 
 	STATE_FIPS = {
 		"01":"AL",
@@ -500,14 +501,14 @@ class States(object):
 		"78":"VI"
 		}
 
-	FIPS_STATES = dict((v,k) for k,v in STATE_FIPS.iteritems())
+	FIPS_STATES = dict((v,k) for k,v in list(STATE_FIPS.items()))
 
 class Regexes(object):
 	street_type = re.compile('|'.join(Streets.STREET_TYPES_LIST), re.IGNORECASE)
 	number = re.compile(r'\d+-?\d*')
 	fraction = re.compile(r'\d+\/\d+')
-	state = re.compile('|'.join([v.replace(' ','\\s') for v in (States.STATE_CODES.values() + States.STATE_CODES.keys())]), re.IGNORECASE)
-	direct = re.compile('|'.join(Directions.DIRECTIONAL.keys()) + '|' + '|'.join([(''.join([n+'\\.' for n in v])+'|'+v) for v in sorted(Directions.DIRECTIONAL.values(), key=len, reverse=True)]), re.IGNORECASE)
+	state = re.compile('|'.join([v.replace(' ','\\s') for v in (list(States.STATE_CODES.values()) + list(States.STATE_CODES.keys()))]), re.IGNORECASE)
+	direct = re.compile('|'.join(list(Directions.DIRECTIONAL.keys())) + '|' + '|'.join([(''.join([n+'\\.' for n in v])+'|'+v) for v in sorted(list(Directions.DIRECTIONAL.values()), key=len, reverse=True)]), re.IGNORECASE)
 	zip_code = re.compile(r'(\d{5})(?:-(\d{4}))?')
 	corner = re.compile(r'(?:\band\b|\bat\b|&|\@)', re.IGNORECASE)
 	unit = re.compile(r'(?:(su?i?te|p\W*[om]\W*b(?:ox)?|dept|apt|trlr|lot|rm|ste|apartment|ro*m|fl|unit|box)\W+|\#\W*)([\w-]+)', re.IGNORECASE)
